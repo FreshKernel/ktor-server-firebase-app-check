@@ -27,9 +27,10 @@ Use this section to describe how to install your project. For example:
     }
    ```
 3. Add the dependency:
+   [![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
     ```groovy
     dependencies {
-        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1")
+        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1") // use the latest version
     }
     
     ```
@@ -127,4 +128,5 @@ for updating the documentation and show us how to contact with their apis
 - Thanks for [Auth0](https://developer.auth0.com/) and [Jwt io](https://jwt.io/) for the jwt libraries
 and the debugger
 
-[![Build Status](https://travis-ci.org/freshtechtips/your-repo.svg?branch=master)](https://travis-ci.org/freshtechtips/your-repo)
+[![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
+[![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
