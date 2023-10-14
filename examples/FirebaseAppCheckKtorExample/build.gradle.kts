@@ -21,11 +21,11 @@ application {
 
 repositories {
     mavenCentral()
-    mavenLocal() // Comment this if you aren't using it
-//    maven {
-//        name = "jitpack"
-//        setUrl("https://jitpack.io")
-//    }
+//    mavenLocal() // Comment this if you aren't using it
+    maven {
+        name = "jitpack"
+        setUrl("https://jitpack.io")
+    }
 }
 
 dependencies {
