@@ -1,6 +1,9 @@
 # Firebase App Check for Ktor server
 
-AN experimental Ktor server plugin for configuring Firebase App Check easily and with simplicity.
+AN **experimental** Ktor server plugin for configuring [Firebase App Check](https://firebase.google.com/products/app-check) easily and with simplicity.
+
+[![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
+[![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
 
 ## Table of Contents
 
@@ -27,7 +30,6 @@ Use this section to describe how to install your project. For example:
     }
    ```
 3. Add the dependency:
-   [![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
     ```groovy
     dependencies {
         implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1") // use the latest version
@@ -63,6 +65,8 @@ By default, the plugin run the app check only when the development is false.
 You can override this by pass `overrideIsShouldVerifyToken = true` in the configuration
 
 ## Usage
+
+You might want to read the [Firebase App Check documentation](https://firebase.google.com/docs/app-check)
 
 Here's how to use the library:
 
