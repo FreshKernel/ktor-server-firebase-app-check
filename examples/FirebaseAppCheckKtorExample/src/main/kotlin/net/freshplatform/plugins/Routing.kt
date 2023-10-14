@@ -25,12 +25,6 @@ fun Application.configureRouting() {
                 ?: throw MissingEnvironmentVariableException("FIREBASE_PROJECT_ID"),
             overrideIsShouldVerifyToken = true,
             secureStrategy = FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes,
-            errorBuilder = { e, call, _ ->
-                call.respondText(
-                    text = "Error while validate the token: $e",
-                    contentType = ContentType.Application.Json,
-                )
-            },
         ).apply {
             pluginMessages = FirebaseAppCheckMessages(
                 this,
