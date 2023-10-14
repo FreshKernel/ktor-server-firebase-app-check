@@ -7,12 +7,26 @@ AN **experimental** Ktor server plugin for configuring [Firebase App Check](http
 
 ## Table of Contents
 
+- [About](#about)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
+
+## About
+Protection for your app’s data and users
+App Check is an additional layer of security that helps protect access to your services by attesting that incoming traffic is coming from your app, and blocking traffic that doesn't have valid credentials. It helps protect your backend from abuse, such as billing fraud, phishing, app impersonation, and data poisoning.
+
+Broad platform support that you can tailor to your needs
+App Check supports Android, iOS and Web out of the box. For customers that want to support more platforms, you can integrate your own attestation provider with App Check's custom capabilities.
+
+Firebase support integrate with custom backend, the supported sdks are Node.js, Python and Go
+
+And this a ktor plugin that save you some time to integrate it with your ktor backend
+
+[![IMAGE ALT TEXT HERE](https://i.imgur.com/asvY9tu.png)](https://youtu.be/LFz8qdF7xg4?si=V8SJRrkrHdCDZBKU)
 
 ## Installation
 
@@ -32,7 +46,7 @@ Use this section to describe how to install your project. For example:
 3. Add the dependency:
     ```groovy
     dependencies {
-        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1") // use the latest version
+        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1") // use the latest version above
     }
     
     ```
