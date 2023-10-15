@@ -1,6 +1,7 @@
 # Firebase App Check for Ktor server
 
 AN **experimental** Ktor server plugin for configuring [Firebase App Check](https://firebase.google.com/products/app-check) easily and with simplicity.
+It is **not affiliated** with Firebase or Google and may not be suitable for production use **yet**.
 
 [![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
 [![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
@@ -157,11 +158,11 @@ Please notice the license can be changed, but it will still be open source.
 
 ## Acknowledgments
 
-- Thanks to [Firebase App Check custom backend](https://firebase.google.com/docs/app-check/custom-resource-backend#other)
-for updating the documentation and show us how to contact with their apis
+- Thanks to [Firebase](https://firebase.google.com/)
+for updating the [documentation](https://firebase.google.com/docs/app-check/custom-resource-backend#other) and show us how to contact with their apis
 - Thanks to Jetbrains for Kotlin, IntelliJ IDEA Community Edition, and Ktor for server
 - Thanks to the open source community
-- Thanks for [Auth0](https://developer.auth0.com/) and [Jwt io](https://jwt.io/) for the jwt libraries
+- Thanks for [Auth0](https://developer.auth0.com/) and [Jwt.io](https://jwt.io/) for the jwt libraries
 and the debugger
 
 [![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)

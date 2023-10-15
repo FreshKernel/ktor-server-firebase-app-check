@@ -13,6 +13,7 @@ val firebaseAppCheckTokenVerifier: FirebaseAppCheckTokenVerifier by lazy {
 
 /**
  * A Ktor server plugin for configuring Firebase App Check easily and with simplicity.
+ * It is not affiliated with Firebase and may not be suitable for production use yet.
  * This plugin is designed to facilitate the setup of Firebase App Check within a Ktor application.
  * It requires the following configurations: `firebaseProjectNumber` and `firebaseProjectId`.
  *
