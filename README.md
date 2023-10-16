@@ -47,7 +47,7 @@ Use this section to describe how to install your project. For example:
 3. Add the dependency:
     ```groovy
     dependencies {
-        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1") // use the latest version above
+        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1-experimental") // use the latest version above
     }
     
     ```
