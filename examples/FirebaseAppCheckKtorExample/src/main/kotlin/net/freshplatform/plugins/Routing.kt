@@ -5,7 +5,11 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.freshplatform.ktor_server.firebase_app_check.*
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPlugin
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
+import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
+import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
 
 class MissingEnvironmentVariableException(variableName: String) :
     RuntimeException("The required environment variable '$variableName' is missing.")
@@ -14,24 +18,6 @@ fun Application.configureRouting() {
     install(StatusPages) {
         exception<Throwable> { call, cause ->
             call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
-        }
-    }
-
-    install(FirebaseAppCheckPlugin) {
-        configuration = FirebaseAppCheckPluginConfiguration(
-            firebaseProjectNumber = System.getenv("FIREBASE_PROJECT_NUMBER")
-                ?: throw MissingEnvironmentVariableException("FIREBASE_PROJECT_NUMBER"),
-            firebaseProjectId = System.getenv("FIREBASE_PROJECT_ID")
-                ?: throw MissingEnvironmentVariableException("FIREBASE_PROJECT_ID"),
-            overrideIsShouldVerifyToken = true,
-            secureStrategy = FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes,
-        ).apply {
-            pluginMessages = FirebaseAppCheckMessages(
-                this,
-                appCheckIsNotDefinedResponse = mapOf(
-                    "error" to "${this.firebaseAppCheckHeaderName} is required"
-                ),
-            )
         }
     }
 

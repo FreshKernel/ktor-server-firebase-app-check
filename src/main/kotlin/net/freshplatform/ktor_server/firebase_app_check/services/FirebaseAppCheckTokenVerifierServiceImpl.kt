@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package net.freshplatform.ktor_server.firebase_app_check.services
 
 import com.auth0.jwk.*
 import com.auth0.jwt.JWT
@@ -7,11 +7,15 @@ import com.auth0.jwt.exceptions.*
 import com.auth0.jwt.interfaces.DecodedJWT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyErrorType
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyException
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
 import java.net.URL
 import java.security.PublicKey
 import java.security.interfaces.RSAPublicKey
 
-class FirebaseAppCheckTokenVerifierImpl : FirebaseAppCheckTokenVerifier {
+class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierService {
     override suspend fun fetchFirebaseAppCheckPublicKey(
         jwtString: String,
         url: String,

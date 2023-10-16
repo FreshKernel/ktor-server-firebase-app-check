@@ -60,20 +60,22 @@ Pass the following environment variables,
 
 ```kotlin
     install(FirebaseAppCheckPlugin) {
-            configuration = FirebaseAppCheckPluginConfiguration(
-                firebaseProjectNumber = System.getenv("FIREBASE_PROJECT_NUMBER"),
-                firebaseProjectId = System.getenv("FIREBASE_PROJECT_ID"),
-                overrideIsShouldVerifyToken = true,
-                secureStrategy = FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes,
-            ).apply {
-                pluginMessages = FirebaseAppCheckMessages(
-                    this,
-                    appCheckIsNotDefinedResponse = mapOf(
-                        "error" to "${this.firebaseAppCheckHeaderName} is required"
-                    ),
-                )
-            }
+    configuration = FirebaseAppCheckPluginConfiguration(
+        firebaseProjectNumber = System.getenv("FIREBASE_PROJECT_NUMBER"),
+        firebaseProjectId = System.getenv("FIREBASE_PROJECT_ID"),
+        isShouldVerifyToken = true,
+        secureStrategy = FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes,
+        pluginMessagesBuilder = { configuration ->
+            // Example of override a response message
+            FirebaseAppCheckMessages(
+                configuration,
+                appCheckIsNotDefinedResponse = mapOf(
+                    "error" to "${configuration.firebaseAppCheckHeaderName} is required"
+                ),
+            )
         }
+    )
+}
 ```
 
 By default, the plugin run the app check only when the development is false.

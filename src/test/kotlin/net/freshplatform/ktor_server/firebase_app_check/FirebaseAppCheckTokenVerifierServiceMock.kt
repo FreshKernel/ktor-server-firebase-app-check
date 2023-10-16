@@ -4,6 +4,10 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.interfaces.DecodedJWT
 import kotlinx.coroutines.delay
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
+import net.freshplatform.ktor_server.firebase_app_check.services.FetchFirebaseAppCheckPublicKeyConfig
+import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppCheckTokenVerifierService
 import java.security.PublicKey
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -21,7 +25,7 @@ class PublicKeyMock : PublicKey {
     }
 }
 
-class FirebaseAppCheckTokenVerifierMock : FirebaseAppCheckTokenVerifier {
+class FirebaseAppCheckTokenVerifierServiceMock : FirebaseAppCheckTokenVerifierService {
     override suspend fun fetchFirebaseAppCheckPublicKey(
         kid: String,
         url: String,

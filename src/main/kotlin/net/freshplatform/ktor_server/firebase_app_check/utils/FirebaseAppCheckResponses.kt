@@ -1,4 +1,6 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package net.freshplatform.ktor_server.firebase_app_check.utils
+
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
 
 /**
  * Data class containing messages related to Firebase App Check.

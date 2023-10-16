@@ -1,76 +1,14 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package net.freshplatform.ktor_server.firebase_app_check.utils.extensions
 
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.util.*
-
-val firebaseAppCheckTokenVerifier: FirebaseAppCheckTokenVerifier by lazy {
-    FirebaseAppCheckTokenVerifierImpl()
-}
-
-/**
- * A Ktor server plugin for configuring Firebase App Check easily and with simplicity.
- * It is not affiliated with Firebase or Google and may not be suitable for production use yet.
- * This plugin is designed to facilitate the setup of Firebase App Check within a Ktor application.
- * It requires the following configurations: `firebaseProjectNumber` and `firebaseProjectId`.
- *
- * @param config The configuration object that holds Firebase App Check settings.
- */
-class FirebaseAppCheckPlugin(
-    internal val config: FirebaseAppCheckPluginConfiguration
-) {
-    companion object Plugin :
-        BaseApplicationPlugin<ApplicationCallPipeline, FirebaseAppCheckPluginConfigurationHolder, FirebaseAppCheckPlugin> {
-        // ...
-        override val key: AttributeKey<FirebaseAppCheckPlugin>
-            get() = AttributeKey("FirebaseAppCheck")
-
-        override fun install(
-            pipeline: ApplicationCallPipeline,
-            configure: FirebaseAppCheckPluginConfigurationHolder.() -> Unit
-        ): FirebaseAppCheckPlugin {
-            val configuration = FirebaseAppCheckPluginConfigurationHolder()
-                .apply(configure).configuration
-            require(configuration.firebaseProjectNumber.isNotBlank()) {
-                "The firebase project number should not be blank."
-            }
-            require(configuration.firebaseProjectId.isNotBlank()) {
-                "The firebase project id should not be blank."
-            }
-
-            val isShouldVerifyToken = configuration.isShouldVerifyToken(pipeline.environment)
-            val secureStrategy = configuration.secureStrategy
-            if (isShouldVerifyToken && secureStrategy !is FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes) {
-                pipeline.intercept(ApplicationCallPipeline.Call) {
-
-                    when (secureStrategy) {
-                        FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes -> {
-                            return@intercept
-                        }
-
-                        FirebaseAppCheckSecureStrategy.ProtectAll -> {
-                            // Do nothing
-                        }
-
-                        is FirebaseAppCheckSecureStrategy.ProtectRoutesByPaths -> {
-                            val uri = call.request.uri
-                            if (!secureStrategy.routesPaths.contains(uri)) {
-                                return@intercept
-                            }
-                        }
-                    }
-
-
-                    call.verifyAppTokenRequest()
-                }
-            }
-            return FirebaseAppCheckPlugin(configuration)
-        }
-    }
-}
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPlugin
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
+import net.freshplatform.ktor_server.firebase_app_check.core.firebaseAppCheckTokenVerifierService
+import net.freshplatform.ktor_server.firebase_app_check.services.FetchFirebaseAppCheckPublicKeyConfig
 
 /**
  * A suspended function that verifies an incoming Firebase App Check token for an [ApplicationCall].
@@ -78,10 +16,10 @@ class FirebaseAppCheckPlugin(
  *
  * It also handles exceptions by default and forwards them to the error builder, along with request information.
  */
-private suspend fun ApplicationCall.verifyAppTokenRequest() {
+suspend fun ApplicationCall.verifyAppTokenRequest() {
     val pluginConfig = application.plugin(FirebaseAppCheckPlugin).config
     val call = this
-    val pluginMessages = pluginConfig.pluginMessages
+    val pluginMessages = pluginConfig.pluginMessagesBuilder(pluginConfig)
     val firebaseAppCheckToken = call.request.header(pluginConfig.firebaseAppCheckHeaderName)
     if (firebaseAppCheckToken == null) {
         call.respond(
@@ -101,12 +39,12 @@ private suspend fun ApplicationCall.verifyAppTokenRequest() {
 
     try {
 
-        val publicKey = firebaseAppCheckTokenVerifier.fetchFirebaseAppCheckPublicKey(
+        val publicKey = firebaseAppCheckTokenVerifierService.fetchFirebaseAppCheckPublicKey(
             jwtString = firebaseAppCheckToken,
             url = pluginConfig.firebaseAppCheckPublicJwtSetUrl,
             config = FetchFirebaseAppCheckPublicKeyConfig()
         )
-        val verifiedJwt = firebaseAppCheckTokenVerifier.verifyFirebaseAppCheckToken(
+        val verifiedJwt = firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
             firebaseProjectId = pluginConfig.firebaseProjectId,
             firebaseProjectNumber = pluginConfig.firebaseProjectNumber,
             jwtString = firebaseAppCheckToken,
@@ -118,7 +56,7 @@ private suspend fun ApplicationCall.verifyAppTokenRequest() {
         if (!isShouldContinue) {
             call.respond(
                 status = HttpStatusCode.Unauthorized,
-                message = pluginMessages.appCheckConditionFalseResponse
+                message = pluginMessages.appCheckConditionFalseResponse,
             )
             return
         }
@@ -151,6 +89,18 @@ private suspend fun ApplicationCall.verifyAppTokenRequest() {
  *
  * By using [FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes], this function ensures that only the defined
  * route and its associated handlers are protected by Firebase App Check.
+ *
+ * Example:
+ * ```
+    get("/test") {
+        call.respondText { "Tis get test doesn't use firebase app check!" }
+    }
+    protectRouteWithAppCheck {
+        post("/test") {
+            call.respondText { "Tis post test is protected!" }
+        }
+    }
+ * ```
  *
  * @param build A lambda that specifies the route and its handlers to be protected.
  */
@@ -196,7 +146,7 @@ class ProtectedRouteSelector : RouteSelector() {
 
 ///**
 // * The plugin secure strategy need to be configured with [FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes]
-// * This will only unprotect one route and his handlers
+// * This will only unprotect a route that is protected
 // * */
 //fun Route.unProtectRouteWithAppCheck(
 //    build: Route.() -> Route,

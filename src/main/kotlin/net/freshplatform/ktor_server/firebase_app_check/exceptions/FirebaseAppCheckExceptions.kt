@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package net.freshplatform.ktor_server.firebase_app_check.exceptions
 
 import java.lang.Exception
 

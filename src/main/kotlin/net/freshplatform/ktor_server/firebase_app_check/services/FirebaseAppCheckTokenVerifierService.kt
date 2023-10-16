@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package net.freshplatform.ktor_server.firebase_app_check.services
 
 import com.auth0.jwt.interfaces.DecodedJWT
 import java.security.PublicKey
@@ -47,7 +47,7 @@ data class FetchFirebaseAppCheckPublicKeyRateLimitedConfig(
 /**
  * Object containing functions for fetching and verifying Firebase App Check tokens.
  */
-interface FirebaseAppCheckTokenVerifier {
+interface FirebaseAppCheckTokenVerifierService {
     /**
      * Suspended function to fetch a Firebase App Check public key.
      *

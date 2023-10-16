@@ -3,13 +3,18 @@ package net.freshplatform.ktor_server.firebase_app_check
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPlugin
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
+import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppCheckTokenVerifierService
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.fail
 
-val firebaseAppCheckTokenVerifier: FirebaseAppCheckTokenVerifier by lazy {
-    FirebaseAppCheckTokenVerifierMock()
+val firebaseAppCheckTokenVerifierService: FirebaseAppCheckTokenVerifierService by lazy {
+    FirebaseAppCheckTokenVerifierServiceMock()
 }
 
 class ApplicationTest {
@@ -26,12 +31,12 @@ class ApplicationTest {
             }
         }
         val jwtString = TestConstants.TOKEN_OF_THE_PROJECT
-        val publicKey = firebaseAppCheckTokenVerifier.fetchFirebaseAppCheckPublicKey(
+        val publicKey = firebaseAppCheckTokenVerifierService.fetchFirebaseAppCheckPublicKey(
             jwtString = jwtString,
             url = pluginConfiguration.firebaseAppCheckPublicJwtSetUrl
         )
         try {
-            firebaseAppCheckTokenVerifier.verifyFirebaseAppCheckToken(
+            firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
                 jwtString = jwtString,
                 publicKey = publicKey,
                 firebaseProjectId = pluginConfiguration.firebaseProjectId,
@@ -44,7 +49,7 @@ class ApplicationTest {
 
 
         val verifiedJwtWithDifferentProjectId = assertFailsWith<FirebaseAppCheckVerifyJwtException> {
-            firebaseAppCheckTokenVerifier.verifyFirebaseAppCheckToken(
+            firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
                 jwtString = jwtString,
                 publicKey = publicKey,
                 firebaseProjectId = "myapp-eb212",
@@ -55,7 +60,7 @@ class ApplicationTest {
         assertEquals(FirebaseAppCheckVerifyJwtErrorType.GenericJwtVerificationError, verifiedJwtWithDifferentProjectId.errorType)
 
         val verifiedJwtWithDifferentProjectNumber = assertFailsWith<FirebaseAppCheckVerifyJwtException> {
-            firebaseAppCheckTokenVerifier.verifyFirebaseAppCheckToken(
+            firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
                 jwtString = jwtString,
                 publicKey = publicKey,
                 firebaseProjectId = pluginConfiguration.firebaseProjectId,
@@ -66,7 +71,7 @@ class ApplicationTest {
         assertEquals(FirebaseAppCheckVerifyJwtErrorType.GenericJwtVerificationError, verifiedJwtWithDifferentProjectNumber.errorType)
 
         val invalidJwtException = assertFailsWith<FirebaseAppCheckVerifyJwtException> {
-            firebaseAppCheckTokenVerifier.verifyFirebaseAppCheckToken(
+            firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
                 jwtString = "eyInvalidJwt",
                 publicKey = publicKey,
                 firebaseProjectId = pluginConfiguration.firebaseProjectId,

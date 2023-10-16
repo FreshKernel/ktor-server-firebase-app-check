@@ -1,44 +1,38 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package net.freshplatform.ktor_server.firebase_app_check.core
 
 import com.auth0.jwt.interfaces.DecodedJWT
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
-import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckFetchPublicKeyErrorType.*
-import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckVerifyJwtErrorType.*
-
-/**
- * A sealed class that defines different strategies for securing routes with Firebase App Check.
- */
-sealed class FirebaseAppCheckSecureStrategy {
-    data object ProtectAll : FirebaseAppCheckSecureStrategy()
-    data class ProtectRoutesByPaths(
-        val routesPaths: List<String>
-    ) : FirebaseAppCheckSecureStrategy()
-
-    data object ProtectSpecificRoutes : FirebaseAppCheckSecureStrategy()
-}
-
-/**
- * A configuration holder class for Firebase App Check plugin.
- * It is used to configure the Firebase App Check settings.
- */
-class FirebaseAppCheckPluginConfigurationHolder {
-    var configuration = FirebaseAppCheckPluginConfiguration()
-}
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyErrorType
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyErrorType.*
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyException
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType.*
+import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
+import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
 
 /**
  * Configuration class for Firebase App Check plugin.
  * It defines the settings required to configure Firebase App Check for a Ktor application.
- * By default, the firebase app check run only in production mode
  * @property firebaseProjectId The Firebase project ID (required).
  * @property firebaseProjectNumber The Firebase project number (required).
- * @property overrideIsShouldVerifyToken If set, overrides the default behavior of when to verify tokens.
- * * if you want to override this behavior, please pass a value to [overrideIsShouldVerifyToken]
+ * @property isShouldVerifyToken If set, overrides the default behavior of when to verify tokens.
+ * By default, the firebase app check run only if the development mode of ktor server is false
+ * * if you want to override this behavior, please pass a value to [isShouldVerifyToken]
  * @property firebaseAppCheckHeaderName The name of the header used to pass the Firebase App Check token.
+ * it's already set by default but if you want to change it for some reason you can pass the value you want
  * @property firebaseAppCheckApiBaseUrl The base URL for Firebase App Check API.
+ * it's already set by default but if you want to change it for some reason you can pass the value you want
  * @property firebaseAppCheckPublicJwtSetUrl The URL for fetching the public JWT set.
- * @property secureStrategy The strategy used to secure specific routes.
+ * it's already set by default but if you want to change it for some reason you can pass the value you want
+ * @property secureStrategy The strategy used to secure specific routes. by default, it uses
+ * [FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes]
+ * if you want to secure the whole app use [FirebaseAppCheckSecureStrategy.ProtectAll] for all the requests
+ * if you want a specific routes in the app use [FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes]
+ * and then protect the routes in the routing by surround them with [protectRouteWithAppCheck]
+ * if you want to protect routes by the path of the route as string use
+ * [FirebaseAppCheckSecureStrategy.ProtectRoutesByPaths]
  * @property additionalSecurityCheck A function to perform additional security checks on the decoded JWT.
  * @property afterSecurityCheck A function to execute after performing security checks.
  * @property errorBuilder A function to build responses for different error scenarios.
@@ -46,7 +40,7 @@ class FirebaseAppCheckPluginConfigurationHolder {
 class FirebaseAppCheckPluginConfiguration(
     var firebaseProjectId: String = "",
     var firebaseProjectNumber: String = "",
-    var overrideIsShouldVerifyToken: Boolean? = null,
+    var isShouldVerifyToken: Boolean? = null,
     var firebaseAppCheckHeaderName: String = "X-Firebase-AppCheck",
     var firebaseAppCheckApiBaseUrl: String = "https://firebaseappcheck.googleapis.com",
     var firebaseAppCheckPublicJwtSetUrl: String = "${firebaseAppCheckApiBaseUrl}/v1/jwks",
@@ -58,7 +52,7 @@ class FirebaseAppCheckPluginConfiguration(
     //    var consumeTheTokenAfterUsingIt: Boolean = false
     var errorBuilder: suspend (e: Exception, call: ApplicationCall, pluginConfig: FirebaseAppCheckPluginConfiguration) -> Unit
     = { e, call, pluginConfig ->
-        val pluginMessages = pluginConfig.pluginMessages
+        val pluginMessages = pluginConfig.pluginMessagesBuilder(pluginConfig)
         when (e) {
             is FirebaseAppCheckVerifyJwtException -> {
                 when (e.errorType) {
@@ -126,6 +120,7 @@ class FirebaseAppCheckPluginConfiguration(
                     }
                 }
             }
+
             is FirebaseAppCheckFetchPublicKeyException -> {
                 when (e.errorType) {
                     SigningKeyNotFound -> {
@@ -148,12 +143,14 @@ class FirebaseAppCheckPluginConfiguration(
                             message = pluginMessages.rateLimitReachedResponse
                         )
                     }
+
                     JwkError -> {
                         call.respond(
                             status = HttpStatusCode.InternalServerError,
                             message = pluginMessages.jwkErrorResponse
                         )
                     }
+
                     FirebaseAppCheckFetchPublicKeyErrorType.UnknownError -> {
                         call.respond(
                             status = HttpStatusCode.InternalServerError,
@@ -172,11 +169,12 @@ class FirebaseAppCheckPluginConfiguration(
             }
         }
     },
+    var pluginMessagesBuilder: (pluginConfiguration: FirebaseAppCheckPluginConfiguration) -> FirebaseAppCheckMessages = {
+        FirebaseAppCheckMessages(
+            pluginConfiguration = it
+        )
+    }
 ) {
-
-    var pluginMessages: FirebaseAppCheckMessages = FirebaseAppCheckMessages(
-        pluginConfiguration = this,
-    )
 
     /**
      * Determines whether token verification should be performed based on the environment (developmentMode).
@@ -185,7 +183,7 @@ class FirebaseAppCheckPluginConfiguration(
      * @return `true` if token verification should be performed; otherwise, `false`.
      */
     fun isShouldVerifyToken(environment: ApplicationEnvironment?): Boolean {
-        overrideIsShouldVerifyToken?.let {
+        isShouldVerifyToken?.let {
             return it
         }
         val isDevMode = environment?.developmentMode ?: false
