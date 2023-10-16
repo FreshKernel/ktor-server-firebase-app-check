@@ -3,6 +3,10 @@
 AN **experimental** Ktor server plugin for configuring [Firebase App Check](https://firebase.google.com/products/app-check) easily and with simplicity.
 It is **not affiliated** with Firebase or Google and may not be suitable for production use **yet**.
 
+Note: this repository name might be changed to [ktor-server-garduain](https://github.com/freshtechtips/ktor-server-garduain)
+
+feel free to share your opinion in the discussions
+
 [![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
 [![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
 
