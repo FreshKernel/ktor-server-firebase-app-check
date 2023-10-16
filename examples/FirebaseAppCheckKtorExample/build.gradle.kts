@@ -44,5 +44,5 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
-    implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1")
+    implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1-experimental")
 }

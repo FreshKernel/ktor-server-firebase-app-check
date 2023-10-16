@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "net.freshplatform.ktor_server.firebase_app_check"
-version = "0.0.1"
+version = "0.0.1-experimental"
 description = "A Ktor server plugin for configuring Firebase App Check easily and with simplicity. It is not affiliated with Firebase or Google and may not be suitable for production use yet."
 extra["experimental"] = true
 
