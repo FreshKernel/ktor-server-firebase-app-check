@@ -35,12 +35,17 @@ fun Application.configureRouting() {
                 }
             }
         }
+        route("/products") {
+            get("/3") {
+                call.respondText { "Product 2, Firebase app check is not required." }
+            }
+        }
         get("/test") {
-            call.respondText { "Tis get test doesn't use firebase app check!" }
+            call.respondText { "This get /test doesn't use firebase app check!" }
         }
         protectRouteWithAppCheck {
             post("/test") {
-                call.respondText { "Tis post test is protected!" }
+                call.respondText { "This post /test is protected!" }
             }
         }
     }
