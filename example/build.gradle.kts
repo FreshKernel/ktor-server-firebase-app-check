@@ -21,12 +21,12 @@ application {
 
 repositories {
     mavenCentral()
-//    mavenLocal() // Comment this if you are using jitpack
+    mavenLocal() // Comment this if you are using jitpack
     // Add jitpack repository if you are not using the mavenLocal()
-    maven {
-        name = "jitpack"
-        setUrl("https://jitpack.io")
-    }
+//    maven {
+//        name = "jitpack"
+//        setUrl("https://jitpack.io")
+//    }
 }
 
 dependencies {
@@ -44,5 +44,5 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
-    implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.1-experimental")
+    implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.2-experimental")
 }
