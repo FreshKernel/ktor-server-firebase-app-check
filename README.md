@@ -160,8 +160,6 @@ Please follow these guidelines when contributing to our project. See [CONTRIBUTI
 
 This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
 
-Please notice the license can be changed, but it will still be open source.
-
 ## Acknowledgments
 
 - Thanks to [Firebase](https://firebase.google.com/)
