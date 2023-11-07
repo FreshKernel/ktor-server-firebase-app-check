@@ -1,14 +1,12 @@
-import org.jetbrains.kotlin.gradle.plugin.extraProperties
-
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val auth0JwksRsa: String by project
-val auth0JavaJwt: String by project
+val kotlinVersion = extra["kotlin.version"] as String
+val ktorVersion = extra["ktor.version"] as String
+val logbackVersion = extra["logback.version"] as String
+val auth0JwksRsaVersion = extra["auth0JwksRsa.version"] as String
+val auth0JavaJwtVersion = extra["auth0JavaJwt.version"] as String
 
 plugins {
-    kotlin("jvm") version "1.9.10"
-    id("io.ktor.plugin") version "2.3.5"
+    kotlin("jvm")
+    id("io.ktor.plugin")
     id("maven-publish")
 }
 
@@ -30,8 +28,8 @@ repositories {
 
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm")
-    implementation("com.auth0:jwks-rsa:$auth0JwksRsa")
-    implementation("com.auth0:java-jwt:$auth0JavaJwt")
+    implementation("com.auth0:jwks-rsa:$auth0JwksRsaVersion")
+    implementation("com.auth0:java-jwt:$auth0JavaJwtVersion")
 //    implementation("io.ktor:ktor-server-auth-jwt-jvm")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")

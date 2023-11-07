@@ -31,7 +31,7 @@ Firebase support integrates with a custom backend, the supported SDKs are Node.j
 
 This a ktor plugin that saves you some time to integrate it with your ktor backend
 
-[![IMAGE ALT TEXT HERE](https://i.imgur.com/asvY9tu.png)](https://youtu.be/LFz8qdF7xg4?si=V8SJRrkrHdCDZBKU)
+[![Firebase app check video](https://i.imgur.com/asvY9tu.png)](https://youtu.be/LFz8qdF7xg4?si=V8SJRrkrHdCDZBKU)
 
 ## Installation
 
@@ -154,7 +154,7 @@ please notice the library is still **experimental**
 
 We welcome contributions!
 
-Please follow these guidelines when contributing to our project. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+Please follow these guidelines when contributing to our project. See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for more details.
 
 ## License
 
