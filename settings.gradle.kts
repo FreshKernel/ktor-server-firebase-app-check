@@ -1,7 +1,7 @@
 import org.gradle.kotlin.dsl.extra
 
 rootProject.name = "FirebaseAppCheck"
-include(":example")
+//include(":example")
 
 pluginManagement {
     plugins {

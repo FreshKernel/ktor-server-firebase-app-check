@@ -27,7 +27,7 @@ class PublicKeyMock : PublicKey {
 
 class FirebaseAppCheckTokenVerifierServiceMock : FirebaseAppCheckTokenVerifierService {
     override suspend fun fetchFirebaseAppCheckPublicKey(
-        kid: String,
+        jwtString: String,
         url: String,
         config: FetchFirebaseAppCheckPublicKeyConfig
     ): PublicKey {
