@@ -1,6 +1,6 @@
 # Firebase App Check Example
 
-A simple project that showcase how to use the Firebase App Check
+A simple project that showcases how to use the Firebase App Check
 library
 
 ## Table of Contents
@@ -9,7 +9,7 @@ library
 
 ## Installation
 1. Clone the repository
-2. Make sure you have Java 11 as minimum, 17 is recommended
+2. Make sure you have Java 11 as a minimum, 17 is recommended
 3. If you want to try this example, you have two options. Either
 go to build.gradle.kts and remove the `mavenLocal()`
 or if you already publish the library to your mavenLocal then
@@ -29,11 +29,10 @@ go to your firebase project settings, in general tab
 
     Post `/test`: Protected route
 6. Send request and set the header `X-Firebase-AppCheck` with the app check token (jwt).
-    you can get the token from firebase app check sdk in the client apps (Android, iOS, macOS, Web)
+    you can get the token from firebase app to check sdk in the client apps (Android, iOS, macOS, Web)
     Or if you just want to test real quick [try this expired token](https://pastebin.com/za2wW8cP).
-   (
-please notice in order to success the test you must generate the app token from client app that use the same project
-)
+   (please notice the success of the test requires valid setup,
+   you must generate the app token from client app that uses the same project)
    
 Token for testing purposes:
 ```
