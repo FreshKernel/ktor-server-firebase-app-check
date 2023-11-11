@@ -1,4 +1,3 @@
-
 val kotlinVersion = extra["kotlin.version"] as String
 val ktorVersion = extra["ktor.version"] as String
 val logbackVersion = extra["logback.version"] as String
@@ -24,10 +23,12 @@ application {
 repositories {
     mavenCentral()
 //    mavenLocal()
-//    maven {
-//        name = "jitpack"
-//        setUrl("https://jitpack.io")
-//    }
+    val jitpackGroupId = "com.github.freshtechtips"
+    maven {
+        name = "jitpack"
+        setUrl("https://jitpack.io")
+        content { includeGroup(jitpackGroupId) }
+    }
 }
 
 dependencies {
@@ -46,4 +47,5 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 
     implementation(project(":library"))
+//    implementation("com.github.freshtechtips:ktor-server-firebase-app-check:v0.0.3-experimental")
 }
