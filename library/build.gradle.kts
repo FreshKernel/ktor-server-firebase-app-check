@@ -15,6 +15,10 @@ version = "0.0.3-experimental"
 description = "A Ktor server plugin for configuring Firebase App Check easily and with simplicity. It is not affiliated with Firebase or Google and may not be suitable for production use yet."
 extra["experimental"] = true
 
+application {
+    mainClass.set("${group}.FirebaseAppCheckKt")
+}
+
 repositories {
     mavenCentral()
 }
