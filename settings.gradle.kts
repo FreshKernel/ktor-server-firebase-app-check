@@ -1,7 +1,7 @@
 import org.gradle.kotlin.dsl.extra
 
 rootProject.name = "FirebaseAppCheck"
-//include(":example")
+include(":example", ":library")
 
 pluginManagement {
     plugins {
@@ -10,6 +10,6 @@ pluginManagement {
 
         kotlin("jvm").version(kotlinVersion).apply(false)
         id("io.ktor.plugin").version(ktorVersion).apply(false)
-        id("maven-publish").apply(false)
+        id("org.jetbrains.kotlin.plugin.serialization").version(kotlinVersion).apply(false) // For the `example`
     }
 }

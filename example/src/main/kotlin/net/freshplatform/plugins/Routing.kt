@@ -5,10 +5,6 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPlugin
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
-import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
 import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
 
 class MissingEnvironmentVariableException(variableName: String) :

@@ -5,9 +5,9 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPlugin
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckPlugin
 import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
-import net.freshplatform.ktor_server.firebase_app_check.core.firebaseAppCheckTokenVerifierService
+import net.freshplatform.ktor_server.firebase_app_check.firebaseAppCheckTokenVerifierService
 import net.freshplatform.ktor_server.firebase_app_check.services.FetchFirebaseAppCheckPublicKeyConfig
 
 /**

@@ -1,5 +1,12 @@
 ## [next]
 
+## 0.0.3-experimental
+* **Breaking Change**: Now you don't need to pass configuration class as value, just add the properties directly
+* **Breaking change**: The `FirebaseAppCheckPlugin` has been moved to the root `kotlin` folder
+* Separate the `src` to a module
+* Include the `example` in the `settings.gradle.kts`
+* Update the `build.gradle.kts` of the `example`
+
 ## 0.0.2-experimental
 * Rename the folder `examples` to `example` and use only one example project
 * Use latest version of kotlin `1.9.20`

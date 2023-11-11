@@ -1,12 +1,14 @@
 
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
+val kotlinVersion = extra["kotlin.version"] as String
+val ktorVersion = extra["ktor.version"] as String
+val logbackVersion = extra["logback.version"] as String
+val auth0JwksRsaVersion = extra["auth0JwksRsa.version"] as String
+val auth0JavaJwtVersion = extra["auth0JavaJwt.version"] as String
 
 plugins {
-    kotlin("jvm") version "1.9.20"
-    id("io.ktor.plugin") version "2.3.5"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
+    kotlin("jvm")
+    id("io.ktor.plugin")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 group = "net.freshplatform"
@@ -21,8 +23,7 @@ application {
 
 repositories {
     mavenCentral()
-    mavenLocal() // Comment this if you are using jitpack
-    // Add jitpack repository if you are not using the mavenLocal()
+//    mavenLocal()
 //    maven {
 //        name = "jitpack"
 //        setUrl("https://jitpack.io")
@@ -40,9 +41,9 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 
-    implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.2-experimental")
+    implementation(project(":library"))
 }

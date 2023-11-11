@@ -1,6 +1,5 @@
 val kotlinVersion = extra["kotlin.version"] as String
 val ktorVersion = extra["ktor.version"] as String
-val logbackVersion = extra["logback.version"] as String
 val auth0JwksRsaVersion = extra["auth0JwksRsa.version"] as String
 val auth0JavaJwtVersion = extra["auth0JavaJwt.version"] as String
 
@@ -8,19 +7,13 @@ plugins {
     kotlin("jvm")
     id("io.ktor.plugin")
     id("maven-publish")
+    id("java-library")
 }
 
 group = "net.freshplatform.ktor_server.firebase_app_check"
-version = "0.0.2-experimental"
+version = "0.0.3-experimental"
 description = "A Ktor server plugin for configuring Firebase App Check easily and with simplicity. It is not affiliated with Firebase or Google and may not be suitable for production use yet."
 extra["experimental"] = true
-
-application {
-    mainClass.set("${group}.FirebaseAppCheckKt")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
-}
 
 repositories {
     mavenCentral()
@@ -35,16 +28,14 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 }
 
+val jitpackGroupId = "com.github.freshtechtips"
 
 publishing {
     publications {
-//        create<MavenPublication>("mavenJava") {
-//            from(components["java"])
-//        }
         create<MavenPublication>("jitpack") {
             from(components["java"])
 
-            groupId = "com.github.freshtechtips"
+            groupId = jitpackGroupId
             artifactId = "ktor-server-firebase-app-check"
             version = project.version.toString()
         }
@@ -55,6 +46,7 @@ publishing {
         maven {
             name = "jitpack"
             setUrl("https://jitpack.io")
+            content { includeGroup(jitpackGroupId) }
         }
     }
 }

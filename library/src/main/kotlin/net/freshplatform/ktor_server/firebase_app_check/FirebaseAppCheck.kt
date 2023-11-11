@@ -1,22 +1,16 @@
-package net.freshplatform.ktor_server.firebase_app_check.core
+package net.freshplatform.ktor_server.firebase_app_check
 
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.util.*
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
+import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
 import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppCheckTokenVerifierService
 import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppCheckTokenVerifierServiceImpl
 import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.verifyAppTokenRequest
 
 val firebaseAppCheckTokenVerifierService: FirebaseAppCheckTokenVerifierService by lazy {
     FirebaseAppCheckTokenVerifierServiceImpl()
-}
-
-/**
- * A configuration holder class for Firebase App Check plugin.
- * It is used to configure the Firebase App Check settings.
- */
-class FirebaseAppCheckPluginConfigurationHolder {
-    var configuration = FirebaseAppCheckPluginConfiguration()
 }
 
 /**
@@ -31,17 +25,16 @@ class FirebaseAppCheckPlugin(
     internal val config: FirebaseAppCheckPluginConfiguration
 ) {
     companion object Plugin :
-        BaseApplicationPlugin<ApplicationCallPipeline, FirebaseAppCheckPluginConfigurationHolder, FirebaseAppCheckPlugin> {
-        // ...
+        BaseApplicationPlugin<ApplicationCallPipeline, FirebaseAppCheckPluginConfiguration, FirebaseAppCheckPlugin> {
         override val key: AttributeKey<FirebaseAppCheckPlugin>
             get() = AttributeKey("FirebaseAppCheck")
 
         override fun install(
             pipeline: ApplicationCallPipeline,
-            configure: FirebaseAppCheckPluginConfigurationHolder.() -> Unit
+            configure: FirebaseAppCheckPluginConfiguration.() -> Unit
         ): FirebaseAppCheckPlugin {
-            val configuration = FirebaseAppCheckPluginConfigurationHolder()
-                .apply(configure).configuration
+            val configuration = FirebaseAppCheckPluginConfiguration()
+                .apply(configure)
             require(configuration.firebaseProjectNumber.isNotBlank()) {
                 "The firebase project number should not be blank."
             }

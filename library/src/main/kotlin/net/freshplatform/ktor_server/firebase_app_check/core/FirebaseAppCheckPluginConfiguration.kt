@@ -21,11 +21,11 @@ import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMe
  * By default, the firebase app check run only if the development mode of ktor server is false
  * * if you want to override this behavior, please pass a value to [isShouldVerifyToken]
  * @property firebaseAppCheckHeaderName The name of the header used to pass the Firebase App Check token.
- * it's already set by default but if you want to change it for some reason you can pass the value you want
+ * it's already set by default, but if you want to change it, for some reason, you can pass the value you want
  * @property firebaseAppCheckApiBaseUrl The base URL for Firebase App Check API.
- * it's already set by default but if you want to change it for some reason you can pass the value you want
+ * it's already set by default, but if you want to change it, for some reason, you can pass the value you want
  * @property firebaseAppCheckPublicJwtSetUrl The URL for fetching the public JWT set.
- * it's already set by default but if you want to change it for some reason you can pass the value you want
+ * it's already set by default, but if you want to change it, for some reason, you can pass the value you want
  * @property secureStrategy The strategy used to secure specific routes. by default, it uses
  * [FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes]
  * if you want to secure the whole app use [FirebaseAppCheckSecureStrategy.ProtectAll] for all the requests

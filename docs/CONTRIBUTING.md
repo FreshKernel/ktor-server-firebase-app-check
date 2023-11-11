@@ -8,7 +8,7 @@ This page will be updated in the future.
 
 ## Steps to contributing
 
-You will need GitHub account as well git installed and configured with your GitHub account on your machine
+You will need GitHub account as well as git installed and configured with your GitHub account on your machine
 
 1. Fork the repository in GitHub
 2. clone the forked repository using `git`
