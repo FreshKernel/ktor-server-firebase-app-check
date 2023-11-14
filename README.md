@@ -18,7 +18,6 @@ feel free to share your opinion in the discussions
 - [Usage](#usage)
 - [Features](#features)
 - [Contributing](#contributing)
-- [License](#license)
 - [Acknowledgments](#acknowledgments)
 
 ## About
@@ -58,7 +57,7 @@ Use this section to describe how to install your project. For example:
 3. Add the dependency:
     ```groovy
     dependencies {
-        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.4-alpha") // use the latest version above
+        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:<latest-version-here>") // use the latest version above
     }
     
     ```
@@ -159,10 +158,6 @@ We welcome contributions!
 
 Please follow these guidelines when contributing to our project. See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for more details.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - Thanks to [Firebase](https://firebase.google.com/)
@@ -172,6 +167,3 @@ for updating the [documentation](https://firebase.google.com/docs/app-check/cust
 - Thanks to the open-source community
 - Thanks for [Auth0](https://developer.auth0.com/) and [Jwt.io](https://jwt.io/) for the JWT libraries
 and the debugger
-
-[![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
-[![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
