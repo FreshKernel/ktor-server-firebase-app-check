@@ -7,8 +7,9 @@ It is **not affiliated** with Firebase or Google and may not be suitable for pro
 
 feel free to share your opinion in the discussions
 
+[//]: # ([![Build Status]&#40;https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=main&#41;]&#40;https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check&#41;)
 [![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
-[![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=main)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
+[![CI](https://github.com/freshtechtips/ktor-server-firebase-app-check/actions/workflows/main.yml/badge.svg)](https://github.com/freshtechtips/ktor-server-firebase-app-check/actions/workflows/main.yml)
 
 ## Table of Contents
 
