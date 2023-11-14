@@ -1,5 +1,7 @@
 package net.freshplatform.ktor_server.firebase_app_check.core
 
+import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
+
 /**
  * A sealed class that defines different strategies for securing routes with Firebase App Check.
  * if you want to secure the whole app use [FirebaseAppCheckSecureStrategy.ProtectAll] for all the requests

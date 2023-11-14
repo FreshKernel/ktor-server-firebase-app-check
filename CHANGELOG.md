@@ -1,4 +1,13 @@
-## [next]
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+[//]: # (## [next])
+
+## 0.0.4-dev
+* The library is now dev state
+* Improve the tests
+* Fix typos
 
 ## 0.0.3-experimental
 * **Breaking Change**: Now you don't need to pass the configuration class as a value, just add the properties directly

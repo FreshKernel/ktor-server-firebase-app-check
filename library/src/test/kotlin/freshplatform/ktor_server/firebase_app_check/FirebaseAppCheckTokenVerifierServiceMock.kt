@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check
+package freshplatform.ktor_server.firebase_app_check
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.exceptions.JWTDecodeException
@@ -11,7 +11,7 @@ import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppChec
 import java.security.PublicKey
 import kotlin.time.Duration.Companion.milliseconds
 
-class PublicKeyMock : PublicKey {
+private class PublicKeyMock : PublicKey {
     override fun getAlgorithm(): String {
         return "RS256"
     }
@@ -64,6 +64,7 @@ class FirebaseAppCheckTokenVerifierServiceMock : FirebaseAppCheckTokenVerifierSe
             }
             return verified
         } catch (e: JWTDecodeException) {
+            println("Fuck: $e")
             throw FirebaseAppCheckVerifyJwtException(
                 "Token is not valid: $e",
                 errorType = FirebaseAppCheckVerifyJwtErrorType.TokenIsNotValid

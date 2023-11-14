@@ -49,7 +49,7 @@ data class FetchFirebaseAppCheckPublicKeyRateLimitedConfig(
  */
 interface FirebaseAppCheckTokenVerifierService {
     /**
-     * Suspended function to fetch a Firebase App Check public key.
+     * Suspended function to fetch a Firebase App Check a public key.
      *
      * @param jwtString to get the kid which is the Key ID.
      * @param url The URL for fetching the public key.

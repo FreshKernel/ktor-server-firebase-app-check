@@ -7,7 +7,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckPlugin
 import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
-import net.freshplatform.ktor_server.firebase_app_check.firebaseAppCheckTokenVerifierService
 import net.freshplatform.ktor_server.firebase_app_check.services.FetchFirebaseAppCheckPublicKeyConfig
 
 /**
@@ -39,12 +38,12 @@ suspend fun ApplicationCall.verifyAppTokenRequest() {
 
     try {
 
-        val publicKey = firebaseAppCheckTokenVerifierService.fetchFirebaseAppCheckPublicKey(
+        val publicKey = pluginConfig.serviceImpl.fetchFirebaseAppCheckPublicKey(
             jwtString = firebaseAppCheckToken,
             url = pluginConfig.firebaseAppCheckPublicJwtSetUrl,
             config = FetchFirebaseAppCheckPublicKeyConfig()
         )
-        val verifiedJwt = firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
+        val verifiedJwt = pluginConfig.serviceImpl.verifyFirebaseAppCheckToken(
             firebaseProjectId = pluginConfig.firebaseProjectId,
             firebaseProjectNumber = pluginConfig.firebaseProjectNumber,
             jwtString = firebaseAppCheckToken,
@@ -110,18 +109,10 @@ fun Route.protectRouteWithAppCheck(
     val configuration = application.plugin(FirebaseAppCheckPlugin).config
 
     val protectedRoute = createChild(ProtectedRouteSelector())
-//    var isRouteProtected = protectedRoute.attributes.getOrNull(isProtectedRouteKey)
-//    if (isRouteProtected == null) {
-//        protectedRoute.attributes.put(isProtectedRouteKey, true)
-//        isRouteProtected = true
-//    }
     val isShouldVerifyToken = configuration.isShouldVerifyToken(environment)
 
     if (isShouldVerifyToken) {
         protectedRoute.intercept(ApplicationCallPipeline.Call) { _ ->
-//            if (!isRouteProtected) {
-//                return@intercept
-//            }
             call.verifyAppTokenRequest()
         }
     }
@@ -135,28 +126,3 @@ class ProtectedRouteSelector : RouteSelector() {
 
     override fun toString(): String = "protected"
 }
-
-//class UnProtectedRouteSelector : RouteSelector() {
-//    override fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
-//        return RouteSelectorEvaluation.Transparent
-//    }
-//
-//    override fun toString(): String = "unprotected"
-//}
-
-///**
-// * The plugin secure strategy need to be configured with [FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes]
-// * This will only unprotect a route that is protected
-// * */
-//fun Route.unProtectRouteWithAppCheck(
-//    build: Route.() -> Route,
-//) {
-//    application.plugin(FirebaseAppCheckPlugin).config
-//
-//    val unProtectedRoute = createChild(UnProtectedRouteSelector())
-//    unProtectedRoute.attributes.put(
-//        isProtectedRouteKey,
-//        false
-//    )
-//    unProtectedRoute.build()
-//}

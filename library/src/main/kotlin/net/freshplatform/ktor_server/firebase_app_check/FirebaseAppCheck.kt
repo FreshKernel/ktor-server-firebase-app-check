@@ -9,10 +9,6 @@ import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppChec
 import net.freshplatform.ktor_server.firebase_app_check.services.FirebaseAppCheckTokenVerifierServiceImpl
 import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.verifyAppTokenRequest
 
-val firebaseAppCheckTokenVerifierService: FirebaseAppCheckTokenVerifierService by lazy {
-    FirebaseAppCheckTokenVerifierServiceImpl()
-}
-
 /**
  * A Ktor server plugin for configuring Firebase App Check easily and with simplicity.
  * It is not affiliated with Firebase or Google and may not be suitable for production use yet.

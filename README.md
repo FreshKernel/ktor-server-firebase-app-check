@@ -1,6 +1,6 @@
 # Firebase App Check for Ktor server
 
-AN **experimental** Ktor server plugin for configuring [Firebase App Check](https://firebase.google.com/products/app-check) easily and with simplicity.
+A Ktor server plugin for configuring [Firebase App Check](https://firebase.google.com/products/app-check) easily and with simplicity.
 It is **not affiliated** with Firebase or Google and may not be suitable for production use **yet**.
 
 [//]: # (Note: this repository name might be changed to [ktor-server-guardian]&#40;https://github.com/freshtechtips/ktor-server-guardian&#41;)
@@ -8,7 +8,7 @@ It is **not affiliated** with Firebase or Google and may not be suitable for pro
 feel free to share your opinion in the discussions
 
 [![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
-[![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=master)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
+[![Build Status](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=main)](https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check)
 
 ## Table of Contents
 
@@ -57,7 +57,7 @@ Use this section to describe how to install your project. For example:
 3. Add the dependency:
     ```groovy
     dependencies {
-        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:v0.0.3-experimental") // use the latest version above
+        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:0.0.4-alpha") // use the latest version above
     }
     
     ```
@@ -87,7 +87,7 @@ Pass the following environment variables,
 ```
 
 By default, the plugin runs the app check only when the development is false.
-You can override this bypass `overrideIsShouldVerifyToken = true` in the configuration
+You can override this bypass `isShouldVerifyToken = true` in the configuration
 
 ## Usage
 
@@ -141,7 +141,7 @@ eyJraWQiOiJ2Yy1sVEEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxOjgwMjA4OTE
 ## Features
 List the key features of the library
 
-please notice the library is still **experimental**
+please notice the library is still **Alpha**
 
 ```markdown
 ## Features
