@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,5 +15,6 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
+          cache: gradle
       - name: Build with Gradle
         run: ./gradlew build
