@@ -16,6 +16,7 @@ feel free to share your opinion in the discussions
 - [About](#about)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Status](#status)
 - [Features](#features)
 - [Contributing](#contributing)
 - [Acknowledgments](#acknowledgments)
@@ -137,11 +138,24 @@ Token for testing purposes:
 eyJraWQiOiJ2Yy1sVEEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxOjgwMjA4OTE0MjU1OTphbmRyb2lkOjI2ZDhjMDA3ZGVkMDNmODQyYTg4MmEiLCJhdWQiOlsicHJvamVjdHNcLzgwMjA4OTE0MjU1OSIsInByb2plY3RzXC9teW5vdGVzLWViNzE3Il0sInByb3ZpZGVyIjoiZGVidWciLCJpc3MiOiJodHRwczpcL1wvZmlyZWJhc2VhcHBjaGVjay5nb29nbGVhcGlzLmNvbVwvODAyMDg5MTQyNTU5IiwiZXhwIjoxNjk3MTM0NDg3LCJpYXQiOjE2OTcxMzA4ODcsImp0aSI6InZLZERfNTRhQ2tzVmpHV0xBN3d1TjZmWlFUQWRYZzRBWGJhYVBzRUZDV0EifQ.H_LGsCe5I-Z2uAgYU1isDmxQ-6PecdmjEqvkrZp9AWthNhsiMdlVYjUe2DaSmt3lhIlwCJyCh2YooOLvSlFAvdx5n__kB5O5C9Fw-Vw-zjSTOAi6lNB0hi8OEkIJhNgw2b_UipeVFd1I6ICkCdV93Ewr-clv-eDeMIg_b8vr3w6HtypZDVu3hAl6BjfxY9r7cm5eBmHGnOxwb1-flSKRJdBmrh4Bm0_imaDPSHw_rUwCUXHOAM-QfdQ-D4C15L_IJH4X6kT7nm8GMj47rQjr1d6CQZbW3xoIsTJvnpreOR1xyiHZiLydj1cwPt6r2DfmjRL6-tFs2u8c72CcoqQ4hhsJE9ZSk1BHXpnGw6t5PLPWmk-K7wCrn49U20SYsbOGzyMmwPs-nRyYL3QeV00brlaQWFN7pnjquYHtgJZgkVZlIe1Hh_8mBzTSLygc3-0Xw3FKf1X6p_jOyyN7Qi3Wf5GHvBdp_sYyuBtXMYVwhKQ56lYBX3waLP0KHSiDiDUW
 ```
 
+## Status
+
+Is this library ready for production use?? 
+The short answer is yes, the long one is no, because we do have
+plans to change too many things that are not related to how the logic
+of Firebase App Check works, the logic will likely still be the same
+
+It will only update when the official one updates.
+What could be changes then?
+only cosmetic changes to change the way to use the library,
+for example, we might change the library name to `KotlinGuardian` or `KtorGuardian`
+and add support for different providers to use instead of firebase alone, add more features
+and things, so we expect to do too many breaking changes but other than that
+
+The library should work just fine as long it follows the official docs of firebase
 
 ## Features
 List the key features of the library
-
-please notice the library is still **Alpha**
 
 ```markdown
 ## Features
@@ -156,7 +170,8 @@ please notice the library is still **Alpha**
 
 We welcome contributions!
 
-Please follow these guidelines when contributing to our project. See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for more details.
+Please follow these guidelines when contributing to this project.
+See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for more details.
 
 ## Acknowledgments
 

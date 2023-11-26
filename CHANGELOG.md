@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 [//]: # (## [next])
 
+## 0.0.5-dev
+* Update the versions to use kotlin `1.9.21` and ktor `2.3.6`
+* Prepare the library to be a KMP Library by using the Kotlin Multiplatform Gradle plugin
+and add the source sets (`jvmMain` and `commonMain`)
+* Share some
+* Update `README` by add a status section
+* Fix a few typos in the docs
+* Update the `build.gradle.kts` to make it less specific to JVM, and remove unused gradle ktor plugin
+* Fix the `group` of the dependency
+* Update GitHub Main workflow
+* Add `before-push.sh` script
+
 ## 0.0.4-dev
 * The library is now dev state
 * Improve the tests
