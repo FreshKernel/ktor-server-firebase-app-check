@@ -171,7 +171,7 @@ List the key features of the library
 We welcome contributions!
 
 Please follow these guidelines when contributing to this project.
-See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for more details.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
 
 ## Acknowledgments
 
