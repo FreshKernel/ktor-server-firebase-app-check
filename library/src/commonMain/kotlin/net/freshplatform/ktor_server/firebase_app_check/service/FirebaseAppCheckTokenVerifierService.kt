@@ -79,3 +79,23 @@ interface FirebaseAppCheckTokenVerifierService {
         issuerBaseUrl: String
     ): DecodedJWT
 }
+
+class FirebaseAppCheckTokenVerifierServiceUnimplemented: FirebaseAppCheckTokenVerifierService {
+    override suspend fun fetchFirebaseAppCheckPublicKey(
+        jwtString: String,
+        url: String,
+        config: FetchFirebaseAppCheckPublicKeyConfig
+    ): PublicKey {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun verifyFirebaseAppCheckToken(
+        jwtString: String,
+        publicKey: PublicKey,
+        firebaseProjectId: String,
+        firebaseProjectNumber: String,
+        issuerBaseUrl: String
+    ): DecodedJWT {
+        TODO("Not yet implemented")
+    }
+}

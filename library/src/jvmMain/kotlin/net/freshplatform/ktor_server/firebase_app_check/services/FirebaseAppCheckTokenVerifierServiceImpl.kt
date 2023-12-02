@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check.service
+package net.freshplatform.ktor_server.firebase_app_check.services
 
 import com.auth0.jwk.*
 import com.auth0.jwt.JWT
@@ -11,6 +11,8 @@ import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCh
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyException
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
+import net.freshplatform.ktor_server.firebase_app_check.service.FetchFirebaseAppCheckPublicKeyConfig
+import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
 import java.net.URL
 import java.security.PublicKey
 import java.security.interfaces.RSAPublicKey

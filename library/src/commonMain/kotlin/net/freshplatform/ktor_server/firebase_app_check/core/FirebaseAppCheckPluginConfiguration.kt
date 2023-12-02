@@ -11,8 +11,8 @@ import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCh
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType.*
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
-import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierServiceImpl
 import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
+import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
 
 /**
  * Configuration class for Firebase App Check plugin.
@@ -176,7 +176,7 @@ class FirebaseAppCheckPluginConfiguration(
             pluginConfiguration = it
         )
     },
-    var serviceImpl: FirebaseAppCheckTokenVerifierService = FirebaseAppCheckTokenVerifierServiceImpl(),
+    var serviceImpl: FirebaseAppCheckTokenVerifierService,
 ) {
 
     /**

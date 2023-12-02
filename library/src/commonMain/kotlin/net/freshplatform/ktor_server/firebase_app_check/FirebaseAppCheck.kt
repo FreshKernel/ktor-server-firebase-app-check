@@ -5,6 +5,7 @@ import io.ktor.server.request.*
 import io.ktor.util.*
 import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
 import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
+import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierServiceUnimplemented
 import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.verifyAppTokenRequest
 
 /**
@@ -27,7 +28,9 @@ class FirebaseAppCheckPlugin(
             pipeline: ApplicationCallPipeline,
             configure: FirebaseAppCheckPluginConfiguration.() -> Unit
         ): FirebaseAppCheckPlugin {
-            val configuration = FirebaseAppCheckPluginConfiguration()
+            val configuration = FirebaseAppCheckPluginConfiguration(
+                serviceImpl = FirebaseAppCheckTokenVerifierServiceUnimplemented()
+            )
                 .apply(configure)
             require(configuration.firebaseProjectNumber.isNotBlank()) {
                 "The firebase project number should not be blank."
