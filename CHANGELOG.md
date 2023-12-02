@@ -15,6 +15,7 @@ and add the source sets (`jvmMain` and `commonMain`)
 * Fix the `group` of the dependency
 * Update GitHub Main workflow
 * Add `before-push.sh` script
+* Move the repo owner from `freshtechtips` to `freshplatform`
 
 ## 0.0.4-dev
 * The library is now dev state
