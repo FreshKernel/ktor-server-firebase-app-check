@@ -1,4 +1,4 @@
-name: Report a bug
+name: Bug report
 description: |
   You found a bug in the library causing your application to crash or
   throw an exception, a feature is buggy, unexpected behavior or something looks wrong.
