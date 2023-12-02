@@ -14,7 +14,7 @@ You will need GitHub account as well as git installed and configured with your G
 2. clone the forked repository using `git`
 3. Add the `upstream` repository using:
     ```
-    git remote add upstream git@github.com:freshtechtips/ktor-server-firebase-app-check.git
+    git remote add upstream git@github.com:freshplatform/ktor-server-firebase-app-check.git
     ```
 4. Open the project with your favorite IDE, we suggest using [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/)
 5. Sync the project with Gradle
@@ -35,7 +35,7 @@ You will need GitHub account as well as git installed and configured with your G
     this will push the new branch to your forked repository
 11. Now you can send your pull request either by following the link that you will get in the command line or open your
 forked repository. You will find an option to send the pull request, you can also
-open the [Pull Requests](https://github.com/freshtechtips/ktor-server-firebase-app-check/pulls) tab and send new pull request
+open the [Pull Requests](https://github.com/freshplatform/ktor-server-firebase-app-check/pulls) tab and send new pull request
 12. Please wait for the review, and we might ask you to make more changes, then run:
 ```
 git add .

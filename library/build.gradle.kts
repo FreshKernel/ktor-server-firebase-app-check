@@ -60,7 +60,7 @@ repositories {
 
 //publishing {
 //
-//    val jitpackGroupId = "com.github.freshtechtips"
+//    val jitpackGroupId = "com.github.freshplatform"
 //
 //    publications {
 //        create<MavenPublication>("jitpack") {

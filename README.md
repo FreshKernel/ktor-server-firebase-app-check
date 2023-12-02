@@ -3,13 +3,13 @@
 A Ktor server plugin for configuring [Firebase App Check](https://firebase.google.com/products/app-check) easily and with simplicity.
 It is **not affiliated** with Firebase or Google and may not be suitable for production use **yet**.
 
-[//]: # (Note: this repository name might be changed to [ktor-server-guardian]&#40;https://github.com/freshtechtips/ktor-server-guardian&#41;)
+[//]: # (Note: this repository name might be changed to [ktor-server-guardian]&#40;https://github.com/freshplatform/ktor-server-guardian&#41;)
 
 feel free to share your opinion in the discussions
 
-[//]: # ([![Build Status]&#40;https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check.svg?branch=main&#41;]&#40;https://travis-ci.org/freshtechtips/ktor-server-firebase-app-check&#41;)
-[![](https://jitpack.io/v/freshtechtips/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshtechtips/ktor-server-firebase-app-check)
-[![CI](https://github.com/freshtechtips/ktor-server-firebase-app-check/actions/workflows/main.yml/badge.svg)](https://github.com/freshtechtips/ktor-server-firebase-app-check/actions/workflows/main.yml)
+[//]: # ([![Build Status]&#40;https://travis-ci.org/freshplatform/ktor-server-firebase-app-check.svg?branch=main&#41;]&#40;https://travis-ci.org/freshplatform/ktor-server-firebase-app-check&#41;)
+[![](https://jitpack.io/v/freshplatform/ktor-server-firebase-app-check.svg)](https://jitpack.io/#freshplatform/ktor-server-firebase-app-check)
+[![CI](https://github.com/freshplatform/ktor-server-firebase-app-check/actions/workflows/main.yml/badge.svg)](https://github.com/freshplatform/ktor-server-firebase-app-check/actions/workflows/main.yml)
 
 ## Table of Contents
 

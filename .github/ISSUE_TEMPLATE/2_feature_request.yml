@@ -12,7 +12,7 @@ body:
       label: Is there an existing issue for this?
       description: Please search to see if an issue already exists for this feature request or proposal.
       options:
-        - label: I have searched the [existing issues](https://github.com/freshtechtips/ktor-server-firebase-app-check/issues)
+        - label: I have searched the [existing issues](https://github.com/freshplatform/ktor-server-firebase-app-check/issues)
           required: true
   - type: textarea
     attributes:
