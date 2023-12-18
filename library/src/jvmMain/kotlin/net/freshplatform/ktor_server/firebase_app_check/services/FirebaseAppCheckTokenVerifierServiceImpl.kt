@@ -13,9 +13,11 @@ import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCh
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
 import net.freshplatform.ktor_server.firebase_app_check.service.FetchFirebaseAppCheckPublicKeyConfig
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
+import net.freshplatform.ktor_server.firebase_app_check.services.jwt.DecodedJwt
 import java.net.URL
 import java.security.PublicKey
 import java.security.interfaces.RSAPublicKey
+import kotlin.time.toJavaDuration
 
 class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierService {
     override suspend fun fetchFirebaseAppCheckPublicKey(
@@ -31,13 +33,10 @@ class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierSe
                     JwkProviderBuilder(URL(url))
                         .cached(
                             cacheConfig.cacheSize,
-                            cacheConfig.expiresIn,
-                            cacheConfig.timeUnit,
+                            cacheConfig.expiresIn.toJavaDuration(),
                         )
                         .rateLimited(
-                            rateLimitedConfig.bucketSize,
-                            rateLimitedConfig.refillRate,
-                            rateLimitedConfig.timeUnit,
+                            rateLimitedConfig.enabled
                         )
                         .build()
 
@@ -109,7 +108,7 @@ class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierSe
         firebaseProjectId: String,
         firebaseProjectNumber: String,
         issuerBaseUrl: String
-    ): DecodedJWT {
+    ): DecodedJwt {
         return withContext(Dispatchers.IO) {
             try {
                 val verifier = JWT
@@ -125,7 +124,7 @@ class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierSe
                         errorType = FirebaseAppCheckVerifyJwtErrorType.HeaderTypeIsNotJwt
                     )
                 }
-                decodedJwt
+                DecodedJwt(decodedJwt.token)
             } catch (e: TokenExpiredException) {
                 throw FirebaseAppCheckVerifyJwtException(
                     message = e.message.toString(),

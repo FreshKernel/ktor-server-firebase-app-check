@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
 //    application
     id("maven-publish")
-//    id("java-library")
 }
 
 val kotlinVersion = libs.versions.kotlin.get()
@@ -19,6 +18,8 @@ description =
 
 kotlin {
     jvm()
+    linuxX64()
+    macosArm64()
 
     sourceSets {
         val commonMain by getting {
@@ -52,10 +53,6 @@ kotlin {
 //            dependsOn(nativeMain)
 //        }
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 //publishing {

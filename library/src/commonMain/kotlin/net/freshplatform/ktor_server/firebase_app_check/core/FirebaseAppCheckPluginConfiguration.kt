@@ -1,6 +1,5 @@
 package net.freshplatform.ktor_server.firebase_app_check.core
 
-import com.auth0.jwt.interfaces.DecodedJWT
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -11,6 +10,7 @@ import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCh
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType.*
 import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
+import net.freshplatform.ktor_server.firebase_app_check.services.jwt.DecodedJwt
 import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
 import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
 
@@ -47,10 +47,10 @@ class FirebaseAppCheckPluginConfiguration(
     var firebaseAppCheckApiBaseUrl: String = "https://firebaseappcheck.googleapis.com",
     var firebaseAppCheckPublicJwtSetUrl: String = "${firebaseAppCheckApiBaseUrl}/v1/jwks",
     var secureStrategy: FirebaseAppCheckSecureStrategy = FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes,
-    var additionalSecurityCheck: suspend (decodedJwt: DecodedJWT) -> Boolean = {
+    var additionalSecurityCheck: suspend (decodedJwt: DecodedJwt) -> Boolean = {
         true
     },
-    var afterSecurityCheck: suspend (decodedJwt: DecodedJWT) -> Unit = {},
+    var afterSecurityCheck: suspend (decodedJwt: DecodedJwt) -> Unit = {},
     //    var consumeTheTokenAfterUsingIt: Boolean = false
     var errorBuilder: suspend (e: Exception, call: ApplicationCall, pluginConfig: FirebaseAppCheckPluginConfiguration) -> Unit
     = { e, call, pluginConfig ->

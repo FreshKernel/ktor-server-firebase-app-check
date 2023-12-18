@@ -1,8 +1,10 @@
 package net.freshplatform.ktor_server.firebase_app_check.service
 
-import com.auth0.jwt.interfaces.DecodedJWT
-import java.security.PublicKey
-import java.util.concurrent.TimeUnit
+import net.freshplatform.ktor_server.firebase_app_check.services.jwt.DecodedJwt
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
+
 
 /**
  * Configuration data class for fetching Firebase App Check public keys. This class
@@ -22,26 +24,19 @@ data class FetchFirebaseAppCheckPublicKeyConfig(
  *
  * @param cacheSize The size of the cache for public keys.
  * @param expiresIn The duration for public keys to expire in the cache.
- * @param timeUnit The time unit for cache expiration.
  */
 data class FetchFirebaseAppCheckPublicKeyCacheConfig(
     val cacheSize: Long = 10,
-    val expiresIn: Long = 24,
-    val timeUnit: TimeUnit = TimeUnit.HOURS,
+    val expiresIn: Duration = 24.hours,
 )
 
 /**
- * Configuration data class for rate limiting of key fetch requests. This class specifies
- * the bucket size, refill rate, and time unit for rate limiting.
+ * Configuration data class for rate limiting of key fetch requests.
  *
- * @param bucketSize The bucket size for rate limiting.
- * @param refillRate The time to refill the rate limit.
- * @param timeUnit The time unit for rate limit refilling.
+ * @param enabled
  */
 data class FetchFirebaseAppCheckPublicKeyRateLimitedConfig(
-    val bucketSize: Long = 10,
-    val refillRate: Long = 1,
-    val timeUnit: TimeUnit = TimeUnit.MINUTES
+    val enabled: Boolean
 )
 
 /**
@@ -77,25 +72,5 @@ interface FirebaseAppCheckTokenVerifierService {
         firebaseProjectId: String,
         firebaseProjectNumber: String,
         issuerBaseUrl: String
-    ): DecodedJWT
-}
-
-class FirebaseAppCheckTokenVerifierServiceUnimplemented: FirebaseAppCheckTokenVerifierService {
-    override suspend fun fetchFirebaseAppCheckPublicKey(
-        jwtString: String,
-        url: String,
-        config: FetchFirebaseAppCheckPublicKeyConfig
-    ): PublicKey {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun verifyFirebaseAppCheckToken(
-        jwtString: String,
-        publicKey: PublicKey,
-        firebaseProjectId: String,
-        firebaseProjectNumber: String,
-        issuerBaseUrl: String
-    ): DecodedJWT {
-        TODO("Not yet implemented")
-    }
+    ): DecodedJwt
 }
