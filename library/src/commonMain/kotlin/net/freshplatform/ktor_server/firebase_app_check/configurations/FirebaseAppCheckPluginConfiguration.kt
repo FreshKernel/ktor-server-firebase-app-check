@@ -1,18 +1,18 @@
-package net.freshplatform.ktor_server.firebase_app_check.core
+package net.freshplatform.ktor_server.firebase_app_check.configurations
 
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyErrorType
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyErrorType.*
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyException
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType.*
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckFetchPublicKeyErrorType
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckFetchPublicKeyErrorType.*
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckFetchPublicKeyException
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckVerifyJwtErrorType
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckVerifyJwtErrorType.*
+import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckVerifyJwtException
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
-import net.freshplatform.ktor_server.firebase_app_check.services.jwt.DecodedJwt
+import net.freshplatform.ktor_server.firebase_app_check.service.jwt.DecodedJwt
 import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
-import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
+import net.freshplatform.ktor_server.firebase_app_check.utils.protectRouteWithAppCheck
 
 /**
  * Configuration class for Firebase App Check plugin.
@@ -45,7 +45,7 @@ class FirebaseAppCheckPluginConfiguration(
     var isShouldVerifyToken: Boolean? = null,
     var firebaseAppCheckHeaderName: String = "X-Firebase-AppCheck",
     var firebaseAppCheckApiBaseUrl: String = "https://firebaseappcheck.googleapis.com",
-    var firebaseAppCheckPublicJwtSetUrl: String = "${firebaseAppCheckApiBaseUrl}/v1/jwks",
+    var firebaseAppCheckPublicKeyUrl: String = "${firebaseAppCheckApiBaseUrl}/v1/jwks",
     var secureStrategy: FirebaseAppCheckSecureStrategy = FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes,
     var additionalSecurityCheck: suspend (decodedJwt: DecodedJwt) -> Boolean = {
         true

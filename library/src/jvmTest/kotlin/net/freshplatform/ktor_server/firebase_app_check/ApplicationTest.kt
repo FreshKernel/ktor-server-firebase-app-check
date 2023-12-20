@@ -7,12 +7,10 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.testing.*
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
+import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckPluginConfiguration
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
 import net.freshplatform.ktor_server.firebase_app_check.utils.FirebaseAppCheckMessages
-import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
+import net.freshplatform.ktor_server.firebase_app_check.utils.protectRouteWithAppCheck
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -81,17 +79,13 @@ class ApplicationTest {
             }
         }
         val jwtString = TestConstants.TOKEN_OF_THE_PROJECT
-        val publicKey = firebaseAppCheckTokenVerifierService.fetchFirebaseAppCheckPublicKey(
-            jwtString = jwtString,
-            url = pluginConfiguration.firebaseAppCheckPublicJwtSetUrl
-        )
         try {
             firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
-                jwtString = jwtString,
-                publicKey = publicKey,
+                firebaseAppCheckTokenJwt = jwtString,
                 firebaseProjectId = pluginConfiguration.firebaseProjectId,
                 firebaseProjectNumber = pluginConfiguration.firebaseProjectNumber,
-                issuerBaseUrl = pluginConfiguration.firebaseAppCheckApiBaseUrl
+                issuerBaseUrl = pluginConfiguration.firebaseAppCheckApiBaseUrl,
+                publicKeyUrl = pluginConfiguration.firebaseAppCheckPublicKeyUrl
             )
         } catch (e: Exception) {
             fail("Test failed while verify the firebase app check token: $e")
@@ -100,10 +94,10 @@ class ApplicationTest {
 
         val verifiedJwtWithDifferentProjectId = assertFailsWith<FirebaseAppCheckVerifyJwtException> {
             firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
-                jwtString = jwtString,
-                publicKey = publicKey,
-                firebaseProjectId = "myapp-eb212",
-                firebaseProjectNumber = pluginConfiguration.firebaseProjectNumber,
+                firebaseAppCheckTokenJwt = jwtString,
+                publicKeyUrl = pluginConfiguration.firebaseAppCheckPublicKeyUrl,
+                firebaseProjectId = pluginConfiguration.firebaseProjectId,
+                firebaseProjectNumber = "32132312123",
                 issuerBaseUrl = pluginConfiguration.firebaseAppCheckApiBaseUrl
             )
         }
@@ -114,11 +108,11 @@ class ApplicationTest {
 
         val verifiedJwtWithDifferentProjectNumber = assertFailsWith<FirebaseAppCheckVerifyJwtException> {
             firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
-                jwtString = jwtString,
-                publicKey = publicKey,
+                firebaseAppCheckTokenJwt = jwtString,
                 firebaseProjectId = pluginConfiguration.firebaseProjectId,
                 firebaseProjectNumber = "32132312123",
-                issuerBaseUrl = pluginConfiguration.firebaseAppCheckApiBaseUrl
+                issuerBaseUrl = pluginConfiguration.firebaseAppCheckApiBaseUrl,
+                publicKeyUrl = pluginConfiguration.firebaseAppCheckPublicKeyUrl
             )
         }
         assertEquals(
@@ -128,8 +122,8 @@ class ApplicationTest {
 
         val invalidJwtException = assertFailsWith<FirebaseAppCheckVerifyJwtException> {
             firebaseAppCheckTokenVerifierService.verifyFirebaseAppCheckToken(
-                jwtString = "eyInvalidJwt",
-                publicKey = publicKey,
+                firebaseAppCheckTokenJwt = "eyInvalidJwt",
+                publicKeyUrl = pluginConfiguration.firebaseAppCheckPublicKeyUrl,
                 firebaseProjectId = pluginConfiguration.firebaseProjectId,
                 firebaseProjectNumber = pluginConfiguration.firebaseProjectNumber,
                 issuerBaseUrl = pluginConfiguration.firebaseAppCheckApiBaseUrl

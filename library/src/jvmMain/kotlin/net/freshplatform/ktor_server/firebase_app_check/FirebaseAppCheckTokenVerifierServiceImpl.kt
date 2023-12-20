@@ -1,26 +1,42 @@
-package net.freshplatform.ktor_server.firebase_app_check.services
+package net.freshplatform.ktor_server.firebase_app_check
 
 import com.auth0.jwk.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.*
-import com.auth0.jwt.interfaces.DecodedJWT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyErrorType
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckFetchPublicKeyException
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
 import net.freshplatform.ktor_server.firebase_app_check.service.FetchFirebaseAppCheckPublicKeyConfig
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
-import net.freshplatform.ktor_server.firebase_app_check.services.jwt.DecodedJwt
+import net.freshplatform.ktor_server.firebase_app_check.service.jwt.DecodedJwt
 import java.net.URL
 import java.security.PublicKey
 import java.security.interfaces.RSAPublicKey
 import kotlin.time.toJavaDuration
 
 class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierService {
-    override suspend fun fetchFirebaseAppCheckPublicKey(
+    override suspend fun verifyFirebaseAppCheckToken(
+        firebaseAppCheckTokenJwt: String,
+        firebaseProjectId: String,
+        firebaseProjectNumber: String,
+        issuerBaseUrl: String,
+        publicKeyUrl: String
+    ): DecodedJwt {
+        val publicKey = fetchFirebaseAppCheckPublicKey(
+            jwtString = firebaseAppCheckTokenJwt,
+            url = publicKeyUrl,
+            config = FetchFirebaseAppCheckPublicKeyConfig()
+        )
+        val verifiedJwt = verifyFirebaseAppCheckToken(
+            firebaseProjectId = firebaseProjectId,
+            firebaseProjectNumber = firebaseProjectNumber,
+            jwtString = firebaseAppCheckTokenJwt,
+            publicKey = publicKey,
+            issuerBaseUrl = issuerBaseUrl
+        )
+        return verifiedJwt
+    }
+    private suspend fun fetchFirebaseAppCheckPublicKey(
         jwtString: String,
         url: String,
         config: FetchFirebaseAppCheckPublicKeyConfig
@@ -102,7 +118,7 @@ class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierSe
         }
     }
 
-    override suspend fun verifyFirebaseAppCheckToken(
+    private suspend fun verifyFirebaseAppCheckToken(
         jwtString: String,
         publicKey: PublicKey,
         firebaseProjectId: String,
@@ -168,4 +184,5 @@ class FirebaseAppCheckTokenVerifierServiceImpl : FirebaseAppCheckTokenVerifierSe
             }
         }
     }
+
 }

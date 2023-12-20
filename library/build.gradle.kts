@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-//    application
     id("maven-publish")
 }
 
@@ -11,10 +10,6 @@ group = "net.freshplatform"
 version = libs.versions.library.get()
 description =
     "A Ktor server plugin for configuring Firebase App Check easily and with simplicity. It is not affiliated with Firebase or Google and may not be suitable for production use yet."
-
-//application {
-//    mainClass.set("${group}.ktor_server.firebase_app_check.FirebaseAppCheckKt")
-//}
 
 kotlin {
     jvm()
@@ -46,12 +41,6 @@ kotlin {
                 implementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
             }
         }
-//        val nativeMain by creating {
-//            dependsOn(commonMain)
-//        }
-//        val nativeTest by creating {
-//            dependsOn(nativeMain)
-//        }
     }
 }
 

@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check.utils.extensions
+package net.freshplatform.ktor_server.firebase_app_check.utils
 
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -6,8 +6,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckPlugin
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
-import net.freshplatform.ktor_server.firebase_app_check.service.FetchFirebaseAppCheckPublicKeyConfig
+import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckSecureStrategy
 
 /**
  * A suspended function that verifies an incoming Firebase App Check token for an [ApplicationCall].
@@ -38,17 +37,12 @@ suspend fun ApplicationCall.verifyAppTokenRequest() {
 
     try {
 
-        val publicKey = pluginConfig.serviceImpl.fetchFirebaseAppCheckPublicKey(
-            jwtString = firebaseAppCheckToken,
-            url = pluginConfig.firebaseAppCheckPublicJwtSetUrl,
-            config = FetchFirebaseAppCheckPublicKeyConfig()
-        )
         val verifiedJwt = pluginConfig.serviceImpl.verifyFirebaseAppCheckToken(
             firebaseProjectId = pluginConfig.firebaseProjectId,
             firebaseProjectNumber = pluginConfig.firebaseProjectNumber,
-            jwtString = firebaseAppCheckToken,
-            publicKey = publicKey,
-            issuerBaseUrl = pluginConfig.firebaseAppCheckApiBaseUrl
+            firebaseAppCheckTokenJwt = firebaseAppCheckToken,
+            issuerBaseUrl = pluginConfig.firebaseAppCheckApiBaseUrl,
+            publicKeyUrl = pluginConfig.firebaseAppCheckPublicKeyUrl
         )
         // Optional: Check that the token’s subject matches your app’s App ID.
         val isShouldContinue = pluginConfig.additionalSecurityCheck(verifiedJwt)

@@ -1,9 +1,8 @@
 package net.freshplatform.ktor_server.firebase_app_check.service
 
-import net.freshplatform.ktor_server.firebase_app_check.services.jwt.DecodedJwt
+import net.freshplatform.ktor_server.firebase_app_check.service.jwt.DecodedJwt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 
 /**
@@ -36,41 +35,30 @@ data class FetchFirebaseAppCheckPublicKeyCacheConfig(
  * @param enabled
  */
 data class FetchFirebaseAppCheckPublicKeyRateLimitedConfig(
-    val enabled: Boolean
+    val enabled: Boolean = true
 )
 
 /**
  * Object containing functions for fetching and verifying Firebase App Check tokens.
  */
 interface FirebaseAppCheckTokenVerifierService {
-    /**
-     * Suspended function to fetch a Firebase App Check a public key.
-     *
-     * @param jwtString to get the kid which is the Key ID.
-     * @param url The URL for fetching the public key.
-     * @param config Configuration for public key fetching.
-     * @return The fetched public key.
-     */
-    suspend fun fetchFirebaseAppCheckPublicKey(
-        jwtString: String, url: String,
-        config: FetchFirebaseAppCheckPublicKeyConfig = FetchFirebaseAppCheckPublicKeyConfig()
-    ): PublicKey
 
     /**
      * Suspended function to verify a Firebase App Check token.
      *
-     * @param jwtString The JWT string to be verified.
-     * @param publicKey The public key used for verification.
+     * @param firebaseAppCheckTokenJwt The JWT string to be verified.
      * @param firebaseProjectId The Firebase project ID.
      * @param firebaseProjectNumber The Firebase project number.
      * @param issuerBaseUrl The base URL of the Firebase App Check issuer.
      * @return The verified Decoded JWT.
      */
     suspend fun verifyFirebaseAppCheckToken(
-        jwtString: String,
-        publicKey: PublicKey,
+        firebaseAppCheckTokenJwt: String,
         firebaseProjectId: String,
         firebaseProjectNumber: String,
-        issuerBaseUrl: String
+        issuerBaseUrl: String,
+        publicKeyUrl: String
     ): DecodedJwt
 }
+
+expect class FirebaseAppCheckTokenVerifierServiceImpl(): FirebaseAppCheckTokenVerifierService

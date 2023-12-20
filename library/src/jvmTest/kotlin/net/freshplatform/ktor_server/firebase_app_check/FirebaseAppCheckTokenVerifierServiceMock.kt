@@ -2,14 +2,9 @@ package net.freshplatform.ktor_server.firebase_app_check
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.exceptions.JWTDecodeException
-import com.auth0.jwt.interfaces.DecodedJWT
-import kotlinx.coroutines.delay
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtErrorType
-import net.freshplatform.ktor_server.firebase_app_check.exceptions.FirebaseAppCheckVerifyJwtException
-import net.freshplatform.ktor_server.firebase_app_check.service.FetchFirebaseAppCheckPublicKeyConfig
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierService
+import net.freshplatform.ktor_server.firebase_app_check.service.jwt.DecodedJwt
 import java.security.PublicKey
-import kotlin.time.Duration.Companion.milliseconds
 
 private class PublicKeyMock : PublicKey {
     override fun getAlgorithm(): String {
@@ -26,24 +21,16 @@ private class PublicKeyMock : PublicKey {
 }
 
 class FirebaseAppCheckTokenVerifierServiceMock : FirebaseAppCheckTokenVerifierService {
-    override suspend fun fetchFirebaseAppCheckPublicKey(
-        jwtString: String,
-        url: String,
-        config: FetchFirebaseAppCheckPublicKeyConfig
-    ): PublicKey {
-        delay(20.milliseconds)
-        return PublicKeyMock()
-    }
 
     override suspend fun verifyFirebaseAppCheckToken(
-        jwtString: String,
-        publicKey: PublicKey,
+        firebaseAppCheckTokenJwt: String,
         firebaseProjectId: String,
         firebaseProjectNumber: String,
-        issuerBaseUrl: String
-    ): DecodedJWT {
+        issuerBaseUrl: String,
+        publicKeyUrl: String
+    ): DecodedJwt {
         try {
-            val verified = JWT.decode(jwtString)
+            val verified = JWT.decode(firebaseAppCheckTokenJwt)
             if (verified.audience.first() != "projects/$firebaseProjectNumber") {
                 throw FirebaseAppCheckVerifyJwtException(
                     "The ${verified.audience.first()} is not equal to projects/$firebaseProjectNumber",
@@ -62,7 +49,7 @@ class FirebaseAppCheckTokenVerifierServiceMock : FirebaseAppCheckTokenVerifierSe
                     errorType = FirebaseAppCheckVerifyJwtErrorType.GenericJwtVerificationError
                 )
             }
-            return verified
+            return DecodedJwt(verified.token)
         } catch (e: JWTDecodeException) {
             throw FirebaseAppCheckVerifyJwtException(
                 "Token is not valid: $e",

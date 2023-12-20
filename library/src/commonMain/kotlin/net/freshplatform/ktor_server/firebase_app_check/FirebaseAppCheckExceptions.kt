@@ -1,4 +1,4 @@
-package net.freshplatform.ktor_server.firebase_app_check.exceptions
+package net.freshplatform.ktor_server.firebase_app_check
 
 /**
  * A custom exception class for Firebase App Check-related errors.

@@ -5,7 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.protectRouteWithAppCheck
+import net.freshplatform.ktor_server.firebase_app_check.utils.protectRouteWithAppCheck
 
 class MissingEnvironmentVariableException(variableName: String) :
     RuntimeException("The required environment variable '$variableName' is missing.")

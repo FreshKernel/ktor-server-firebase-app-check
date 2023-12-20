@@ -3,10 +3,10 @@ package net.freshplatform.ktor_server.firebase_app_check
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.util.*
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckPluginConfiguration
-import net.freshplatform.ktor_server.firebase_app_check.core.FirebaseAppCheckSecureStrategy
-import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierServiceUnimplemented
-import net.freshplatform.ktor_server.firebase_app_check.utils.extensions.verifyAppTokenRequest
+import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckPluginConfiguration
+import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckSecureStrategy
+import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierServiceImpl
+import net.freshplatform.ktor_server.firebase_app_check.utils.verifyAppTokenRequest
 
 /**
  * A Ktor server plugin for configuring Firebase App Check easily and with simplicity.
@@ -29,7 +29,7 @@ class FirebaseAppCheckPlugin(
             configure: FirebaseAppCheckPluginConfiguration.() -> Unit
         ): FirebaseAppCheckPlugin {
             val configuration = FirebaseAppCheckPluginConfiguration(
-                serviceImpl = FirebaseAppCheckTokenVerifierServiceUnimplemented()
+                serviceImpl = FirebaseAppCheckTokenVerifierServiceImpl()
             )
                 .apply(configure)
             require(configuration.firebaseProjectNumber.isNotBlank()) {
