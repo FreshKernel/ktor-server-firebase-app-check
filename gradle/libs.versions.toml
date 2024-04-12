@@ -1,17 +1,17 @@
 [versions]
-kotlin = "1.9.21"
-ktor = "2.3.6"
+kotlin = "1.9.23"
+ktor = "2.3.10"
 library = "0.0.5-dev"
 
 # Example
-logback = "1.4.11"
+logback = "1.5.4"
 
 # Library
 auth0-java-jwt = "4.4.0"
 auth0-java-jwksRsa = "0.22.1"
 
-kotlinx-coroutines = "1.7.3"
-kotlinx-serialization = "1.6.2"
+kotlinx-coroutines = "1.8.0"
+kotlinx-serialization = "1.6.3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
