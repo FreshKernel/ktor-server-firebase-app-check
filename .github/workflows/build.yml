@@ -35,8 +35,6 @@ jobs:
 
       - name: Make sure the `./gradlew` is executable
         run: chmod +x ./gradlew
-        working-directory: ./server
 
       - name: Build & Test with Gradle
         run: ./gradlew build --stacktrace
-        working-directory: ./server
