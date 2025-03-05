@@ -1,6 +1,8 @@
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.serverConfig
+import io.ktor.server.engine.connector
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import plugins.configureHTTP
 import plugins.configureRouting
 import plugins.configureSecurity
@@ -9,17 +11,18 @@ import plugins.configureSerialization
 fun main() {
     embeddedServer(
         factory = Netty,
-        environment = applicationEngineEnvironment {
-            watchPaths = listOf("classes", "resources")
+        rootConfig = serverConfig {
             developmentMode = true
-            connector {
-                port = 8080
-                host = "0.0.0.0"
-            }
+            watchPaths = listOf("classes", "resources")
             module(Application::module)
         },
-    )
-        .start(wait = true)
+        configure = {
+            connector {
+                host = "0.0.0.0"
+                port = 12345
+            }
+        }
+    ).start(wait = true)
 }
 
 fun Application.module() {

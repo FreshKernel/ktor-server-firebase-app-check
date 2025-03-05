@@ -182,14 +182,10 @@ class FirebaseAppCheckPluginConfiguration(
     /**
      * Determines whether token verification should be performed based on the environment (developmentMode).
      *
-     * @param environment The application environment.
+     * @param isDevMode A boolean indicating whether dev mode is enabled or not.
      * @return `true` if token verification should be performed; otherwise, `false`.
      */
-    fun isShouldVerifyToken(environment: ApplicationEnvironment?): Boolean {
-        isShouldVerifyToken?.let {
-            return it
-        }
-        val isDevMode = environment?.developmentMode ?: false
-        return !isDevMode
-    }
+    fun isShouldVerifyToken(isDevMode: Boolean): Boolean =
+        isShouldVerifyToken ?: !isDevMode
+
 }

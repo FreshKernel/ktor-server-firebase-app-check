@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 [//]: # (## [next])
+## 0.0.6-dev
+* Update to support ktor 3
+* Update dependencies: 
+  * kotlin = "2.1.10"
+    ktor = "3.1.1" 
+  * Move the dependencies's versions to catalog
 
 ## 0.0.5-dev
 * Update the versions to use kotlin `1.9.21` and ktor `2.3.6`

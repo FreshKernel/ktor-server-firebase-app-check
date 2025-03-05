@@ -1,10 +1,18 @@
 package net.freshplatform.ktor_server.firebase_app_check.utils
 
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.application.ApplicationCallPipeline
+import io.ktor.server.application.call
+import io.ktor.server.application.plugin
+import io.ktor.server.request.header
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.RouteSelector
+import io.ktor.server.routing.RouteSelectorEvaluation
+import io.ktor.server.routing.RoutingResolveContext
+import io.ktor.server.routing.application
+import io.ktor.server.routing.intercept
 import net.freshplatform.ktor_server.firebase_app_check.FirebaseAppCheckPlugin
 import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckSecureStrategy
 
@@ -103,7 +111,7 @@ fun Route.protectRouteWithAppCheck(
     val configuration = application.plugin(FirebaseAppCheckPlugin).config
 
     val protectedRoute = createChild(ProtectedRouteSelector())
-    val isShouldVerifyToken = configuration.isShouldVerifyToken(environment)
+    val isShouldVerifyToken = configuration.isShouldVerifyToken(application.developmentMode)
 
     if (isShouldVerifyToken) {
         protectedRoute.intercept(ApplicationCallPipeline.Call) { _ ->
@@ -114,7 +122,7 @@ fun Route.protectRouteWithAppCheck(
 }
 
 class ProtectedRouteSelector : RouteSelector() {
-    override fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
+    override suspend fun evaluate(context: RoutingResolveContext, segmentIndex: Int): RouteSelectorEvaluation {
         return RouteSelectorEvaluation.Transparent
     }
 
