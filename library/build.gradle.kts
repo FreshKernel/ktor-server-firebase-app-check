@@ -10,8 +10,6 @@ description =
 
 kotlin {
     jvm()
-//    linuxX64() it should be setup by who need it
-//    macosArm64() it should be setup by who need it
 
     sourceSets {
         val commonMain by getting {
