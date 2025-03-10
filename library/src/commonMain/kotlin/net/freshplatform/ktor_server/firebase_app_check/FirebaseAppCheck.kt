@@ -1,8 +1,10 @@
 package net.freshplatform.ktor_server.firebase_app_check
 
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.util.*
+import io.ktor.server.application.ApplicationCallPipeline
+import io.ktor.server.application.BaseApplicationPlugin
+import io.ktor.server.application.call
+import io.ktor.server.request.uri
+import io.ktor.util.AttributeKey
 import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckPluginConfiguration
 import net.freshplatform.ktor_server.firebase_app_check.configurations.FirebaseAppCheckSecureStrategy
 import net.freshplatform.ktor_server.firebase_app_check.service.FirebaseAppCheckTokenVerifierServiceImpl
@@ -39,7 +41,7 @@ class FirebaseAppCheckPlugin(
                 "The firebase project id should not be blank."
             }
 
-            val isShouldVerifyToken = configuration.isShouldVerifyToken(pipeline.environment)
+            val isShouldVerifyToken = configuration.isShouldVerifyToken(pipeline.developmentMode)
             val secureStrategy = configuration.secureStrategy
             if (isShouldVerifyToken && secureStrategy !is FirebaseAppCheckSecureStrategy.ProtectSpecificRoutes) {
                 pipeline.intercept(ApplicationCallPipeline.Call) {

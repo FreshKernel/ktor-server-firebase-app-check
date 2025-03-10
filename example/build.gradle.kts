@@ -1,7 +1,3 @@
-val kotlinVersion = libs.versions.kotlin.get()
-val ktorVersion = libs.versions.ktor.get()
-val logbackVersion = libs.versions.logback.get()
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
     application
@@ -23,19 +19,19 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-host-common-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-status-pages-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-compression-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-caching-headers-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.auth.jvm)
+    implementation(libs.ktor.server.auth.jwt)
+    implementation(libs.ktor.server.host)
+    implementation(libs.ktor.server.status.pages)
+    implementation(libs.ktor.server.compression)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.server.caching.headers)
+    implementation(libs.logback.classic)
 
-    testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    testImplementation(libs.ktor.server.test.jvm)
+    testImplementation(libs.kotlin.test)
     implementation(project(":library"))
 }

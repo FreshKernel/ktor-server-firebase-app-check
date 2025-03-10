@@ -3,9 +3,6 @@ plugins {
     id("maven-publish")
 }
 
-val kotlinVersion = libs.versions.kotlin.get()
-val ktorVersion = libs.versions.ktor.get()
-
 group = "net.freshplatform"
 version = libs.versions.library.get()
 description =
@@ -13,32 +10,29 @@ description =
 
 kotlin {
     jvm()
-    linuxX64()
-    macosArm64()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-server-core:$ktorVersion")
+                implementation(libs.ktor.server.core)
                 implementation(libs.kotlinx.coroutines)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+                implementation(libs.kotlin.test)
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+                implementation(libs.ktor.server.core)
                 implementation(libs.auth0.java.jwt)
                 implementation(libs.auth0.java.jwksRsa)
-//                implementation("io.ktor:ktor-server-auth-jwt-jvm")
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
+                implementation(libs.ktor.server.test.jvm)
             }
         }
     }
