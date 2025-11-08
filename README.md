@@ -46,19 +46,19 @@ Use this section to describe how to install your project. For example:
 
 1. [Create a new ktor project](https://start.ktor.io/) or use existing one if you already have.
 2. Add jitpack repository to your `build.gradle.kts`:
-   ```groovy
-   repositories {
-    mavenCentral()
-    maven {
-        name = "jitpack"
-        setUrl("https://jitpack.io")
+```groovy
+repositories {
+   mavenCentral()
+   maven {
+      name = "jitpack"
+      setUrl("https://jitpack.io")
     }
-    }
-   ```
+}
+```
 3. Add the dependency:
     ```groovy
     dependencies {
-        implementation("com.github.freshtechtips:ktor-server-firebase-app-check:<latest-version-here>") // use the latest version above
+        implementation("com.github.FreshKernel:ktor-server-firebase-app-check:<latest-version-here>") // use the latest version above
     }
     
     ```
@@ -70,7 +70,7 @@ Pass the following environment variables,
    * `FIREBASE_PROJECT_ID` from the Project number
 
 ```kotlin
-    install(FirebaseAppCheckPlugin) {
+install(FirebaseAppCheckPlugin) {
     firebaseProjectNumber = System.getenv("FIREBASE_PROJECT_NUMBER")
     firebaseProjectId = System.getenv("FIREBASE_PROJECT_ID")
     isShouldVerifyToken = true
